@@ -239,3 +239,68 @@
   .signal-hero__lamp-fallback,
   .signal-hero__scroll span::after { animation: none; }
 }
+
+.lamp-scene--css {
+  --lamp-x: 50%;
+  --lamp-y: 42%;
+  --lamp-rotate: 0deg;
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.lamp-scene__cable {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 27vh;
+  background: linear-gradient(var(--color-muted), rgba(146, 146, 146, 0));
+}
+
+.lamp-scene__shade {
+  position: absolute;
+  top: 24vh;
+  left: calc(50% - 4.2rem);
+  width: 8.4rem;
+  height: 3.8rem;
+  border-radius: 48% 48% 18% 18%;
+  background: linear-gradient(180deg, #17120d, #050505 72%);
+  border: 1px solid rgba(211, 163, 93, 0.34);
+  box-shadow: 0 0 2rem rgba(211, 163, 93, 0.18), inset 0 -0.45rem 1rem rgba(211, 163, 93, 0.18);
+  transform: rotate(var(--lamp-rotate));
+  transform-origin: 50% -5rem;
+  transition: transform 380ms var(--ease-emphasized);
+}
+
+.lamp-scene__beam {
+  position: absolute;
+  top: 29vh;
+  left: 50%;
+  width: 54vw;
+  height: 58vh;
+  transform: translateX(-50%);
+  clip-path: polygon(43% 0, 57% 0, 100% 100%, 0 100%);
+  background: radial-gradient(circle at var(--lamp-x) var(--lamp-y), rgba(211, 163, 93, 0.18), rgba(211, 163, 93, 0.08) 28%, transparent 72%);
+  filter: blur(0.4px);
+  opacity: 0.82;
+}
+
+.lamp-scene__dust {
+  position: absolute;
+  inset: 30vh 25vw 12vh;
+  background-image: radial-gradient(circle, rgba(233, 226, 214, 0.42) 0 1px, transparent 1.5px);
+  background-size: 4rem 4rem;
+  opacity: 0.12;
+  animation: lampDust 12s linear infinite;
+}
+
+.lamp-scene__dust--two { transform: translateY(2rem); animation-duration: 18s; opacity: 0.08; }
+
+@keyframes lampDust { to { background-position: 8rem 12rem; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp-scene__dust { animation: none; }
+  .lamp-scene__shade { transition: none; }
+}
