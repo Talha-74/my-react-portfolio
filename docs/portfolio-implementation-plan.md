@@ -282,7 +282,7 @@ Create a safe foundation for the revamp without changing the public design signi
 
 ### 1. Repository audit
 
-Inspect and document:
+Inspect and Understand First:
 
 - current route structure
 - current component structure
