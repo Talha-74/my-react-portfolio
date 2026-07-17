@@ -1,6 +1,6 @@
 import React,{ useContext} from 'react';
 import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '../../utils/makeStyles';
 import { HiArrowRight } from "react-icons/hi";
 
 import './Blog.css';
@@ -15,15 +15,15 @@ function Blog() {
 
     const useStyles = makeStyles(() => ({
         viewAllBtn : {
-            color: theme.tertiary, 
+            color: theme.tertiary,
             backgroundColor: theme.primary,
             "&:hover": {
-                color: theme.secondary, 
+                color: theme.secondary,
                 backgroundColor: theme.primary,
             }
         },
         viewArr : {
-            color: theme.tertiary, 
+            color: theme.tertiary,
             backgroundColor: theme.secondary70,
             width: '40px',
             height: '40px',
@@ -32,7 +32,7 @@ function Blog() {
             borderRadius: '50%',
             cursor: 'pointer',
             "&:hover": {
-                color: theme.tertiary, 
+                color: theme.tertiary,
                 backgroundColor: theme.secondary,
             }
         },
@@ -50,7 +50,7 @@ function Blog() {
                     <div className="blog--body">
                         <div className="blog--bodyContainer">
                             {blogData.slice(0, 3).reverse().map(blog => (
-                                <SingleBlog 
+                                <SingleBlog
                                     theme={theme}
                                     title={blog.title}
                                     desc={blog.description}
@@ -61,7 +61,7 @@ function Blog() {
                                     id={blog.id}
                                 />
                             ))}
-                        </div> 
+                        </div>
 
                         {blogData.length > 3 && (
                             <div className="blog--viewAll">

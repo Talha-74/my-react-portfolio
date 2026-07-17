@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Button } from '@material-ui/core';
 import { NavHashLink as NavLink } from 'react-router-hash-link';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '../../utils/makeStyles';
 
 import './Landing.css';
 import { ThemeContext } from '../../contexts/ThemeContext';
@@ -171,9 +170,9 @@ function Landing() {
                                     target='_blank'
                                     rel='noreferrer'
                                 >
-                                    <Button className={classes.resumeBtn}>
+                                    <button type="button" className={classes.resumeBtn}>
                                         Download CV
-                                    </Button>
+                                    </button>
                                 </a>
                             )}
                             <NavLink
@@ -182,9 +181,9 @@ function Landing() {
                                 spy='true'
                                 duration={2000}
                             >
-                                <Button className={classes.contactBtn}>
+                                <button type="button" className={classes.contactBtn}>
                                     Contact
-                                </Button>
+                                </button>
                             </NavLink>
                         </div>
                     </div>

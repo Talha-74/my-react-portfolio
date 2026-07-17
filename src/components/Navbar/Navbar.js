@@ -1,14 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { NavHashLink as NavLink } from 'react-router-hash-link';
-import Fade from 'react-reveal/Fade';
-import { IoMenuSharp, IoHomeSharp } from 'react-icons/io5';
+import { IoMenuSharp, IoHomeSharp, IoClose } from 'react-icons/io5';
 import { HiDocumentText } from 'react-icons/hi';
 import { BsFillGearFill } from 'react-icons/bs';
 import { MdPhone } from 'react-icons/md';
 import { FaUser, FaFolderOpen } from 'react-icons/fa';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CloseIcon from '@material-ui/icons/Close';
+import makeStyles from '../../utils/makeStyles';
 
 import './Navbar.css';
 import { headerData } from '../../data/headerData';
@@ -143,23 +140,10 @@ function Navbar() {
                     aria-label='Menu'
                 />
             </div>
-            <Drawer
-                variant='temporary'
-                onClose={(event, reason) => {
-                    if (reason !== 'backdropClick') {
-                        handleDrawerClose();
-                    } else if (reason !== 'escapeKeyDown') {
-                        handleDrawerClose();
-                    }
-                }}
-                anchor='left'
-                open={open}
-                classes={{ paper: classes.MuiDrawer }}
-                className='drawer'
-                disableScrollLock={true}
-            >
+            {open && (
+            <aside className={`drawer ${classes.MuiDrawer}`} aria-label='Portfolio navigation'>
                 <div className='div-closebtn'>
-                    <CloseIcon
+                    <IoClose
                         onClick={handleDrawerClose}
                         onKeyDown={(e) => {
                             if (e.key === ' ' || e.key === 'Enter') {
@@ -177,8 +161,7 @@ function Navbar() {
 
                 <div onClick={handleDrawerClose}>
                     <div className='navLink--container'>
-                        <Fade left>
-                            <NavLink
+                        <NavLink
                                 to='/'
                                 smooth={true}
                                 spy='true'
@@ -193,10 +176,9 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
 
-                        <Fade left>
-                            <NavLink
+
+                        <NavLink
                                 to='/#about'
                                 smooth={true}
                                 spy='true'
@@ -209,10 +191,9 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
 
-                        <Fade left>
-                            <NavLink
+
+                        <NavLink
                                 to='/#resume'
                                 smooth={true}
                                 spy='true'
@@ -227,10 +208,9 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
 
-                        <Fade left>
-                            <NavLink
+
+                        <NavLink
                                 to='/#services'
                                 smooth={true}
                                 spy='true'
@@ -245,10 +225,9 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
 
-                        <Fade left>
-                            <NavLink
+
+                        <NavLink
                                 to='/#blog'
                                 smooth={true}
                                 spy='true'
@@ -263,10 +242,9 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
 
-                        <Fade left>
-                            <NavLink
+
+                        <NavLink
                                 to='/#contacts'
                                 smooth={true}
                                 spy='true'
@@ -279,10 +257,11 @@ function Navbar() {
                                     </span>
                                 </div>
                             </NavLink>
-                        </Fade>
+
                     </div>
                 </div>
-            </Drawer>
+            </aside>
+            )}
         </div>
     );
 }

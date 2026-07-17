@@ -1,6 +1,4 @@
-import React, { useContext, useRef } from 'react';
-
-import Slider from 'react-slick';
+import React, { useContext, useState } from 'react';
 
 import { FaQuoteLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
@@ -11,31 +9,14 @@ import './Testimonials.css';
 
 function Testimonials() {
     const { theme } = useContext(ThemeContext);
-    const sliderRef = useRef();
-
-    const settings = {
-        dots: true,
-        adaptiveHeight: true,
-        infinite: true,
-        speed: 800,
-        arrows: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        margin: 3,
-        loop: true,
-        autoplaySpeed: 3000,
-        draggable: true,
-        swipeToSlide: true,
-        swipe: true,
-    };
+    const [activeTestimonial, setActiveTestimonial] = useState(0);
 
     const gotoNext = () => {
-        sliderRef.current.slickNext();
+        setActiveTestimonial((current) => (current + 1) % testimonialsData.length);
     };
 
     const gotoPrev = () => {
-        sliderRef.current.slickPrev();
+        setActiveTestimonial((current) => (current - 1 + testimonialsData.length) % testimonialsData.length);
     };
 
     return (
@@ -57,11 +38,11 @@ function Testimonials() {
                             className='testimonials--slider'
                             style={{ backgroundColor: theme.primary }}
                         >
-                            <Slider {...settings} ref={sliderRef}>
-                                {testimonialsData.map((test) => (
+                            {testimonialsData.map((test, index) => (
                                     <div
-                                        className='single--testimony'
+                                        className={`single--testimony ${index === activeTestimonial ? 'single--testimony-active' : ''}`}
                                         key={test.id}
+                                        hidden={index !== activeTestimonial}
                                     >
                                         <div className='testimonials--container'>
                                             <div
@@ -91,7 +72,6 @@ function Testimonials() {
                                         </div>
                                     </div>
                                 ))}
-                            </Slider>
                             <button
                                 className='prevBtn'
                                 onClick={gotoPrev}
