@@ -1,0 +1,26 @@
+body {
+  background:
+    radial-gradient(circle at top center, rgba(211, 163, 93, 0.08), transparent 32rem),
+    linear-gradient(180deg, var(--color-ink), var(--color-carbon));
+  color: var(--color-ivory);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a {
+  min-height: 44px;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--color-ink);
+  color: var(--color-ivory);
+}
+
+.signal-page-shell {
+  isolation: isolate;
+  min-height: 100vh;
+}
