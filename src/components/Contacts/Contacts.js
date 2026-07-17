@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Snackbar, IconButton, SnackbarContent } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import isEmail from 'validator/lib/isEmail';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '../../utils/makeStyles';
 import {
     FaTwitter,
     FaLinkedinIn,
@@ -17,7 +15,7 @@ import {
     FaGitlab,
     FaMediumM,
 } from 'react-icons/fa';
-import { AiOutlineSend, AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineSend, AiOutlineCheckCircle, AiOutlineClose } from 'react-icons/ai';
 import { FiPhone, FiAtSign } from 'react-icons/fi';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 
@@ -248,36 +246,27 @@ function Contacts() {
                                 </button>
                             </div>
                         </form>
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'center',
-                            }}
-                            open={open}
-                            autoHideDuration={4000}
-                            onClose={handleClose}
-                        >
-                            <SnackbarContent
-                                action={
-                                    <React.Fragment>
-                                        <IconButton
-                                            size='small'
-                                            aria-label='close'
-                                            color='inherit'
-                                            onClick={handleClose}
-                                        >
-                                            <CloseIcon fontSize='small' />
-                                        </IconButton>
-                                    </React.Fragment>
-                                }
+                        {open && (
+                            <div
+                                className='contact-alert'
+                                role='alert'
                                 style={{
                                     backgroundColor: theme.primary,
                                     color: theme.secondary,
                                     fontFamily: 'var(--primaryFont)',
                                 }}
-                                message={errMsg}
-                            />
-                        </Snackbar>
+                            >
+                                <span>{errMsg}</span>
+                                <button
+                                    type='button'
+                                    aria-label='close'
+                                    onClick={handleClose}
+                                    className='contact-alert-close'
+                                >
+                                    <AiOutlineClose />
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <div className='contacts-details'>
