@@ -1,195 +1,95 @@
-import React, { useContext } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { NavHashLink as NavLink } from 'react-router-hash-link';
-import makeStyles from '../../utils/makeStyles';
 
 import './Landing.css';
-import { ThemeContext } from '../../contexts/ThemeContext';
 import { headerData } from '../../data/headerData';
 import { socialsData } from '../../data/socialsData';
+import { PrimaryButton, SecondaryButton } from '../ui';
+import LoadingFallback from '../ui/LoadingFallback';
 
-import {
-    FaTwitter,
-    FaLinkedin,
-    FaGithub,
-    FaYoutube,
-    FaBlogger,
-} from 'react-icons/fa';
+const LampScene = React.lazy(() => import('./LampScene'));
 
 function Landing() {
-    const { theme, drawerOpen } = useContext(ThemeContext);
+    const [canUseLampScene, setCanUseLampScene] = useState(false);
 
-    const useStyles = makeStyles((t) => ({
-        resumeBtn: {
-            color: theme.primary,
-            borderRadius: '30px',
-            textTransform: 'inherit',
-            textDecoration: 'none',
-            width: '150px',
-            fontSize: '1rem',
-            fontWeight: '500',
-            height: '50px',
-            fontFamily: 'var(--primaryFont)',
-            border: `3px solid ${theme.primary}`,
-            transition: '100ms ease-out',
-            '&:hover': {
-                backgroundColor: theme.tertiary,
-                color: theme.secondary,
-                border: `3px solid ${theme.tertiary}`,
-            },
-            [t.breakpoints.down('sm')]: {
-                width: '180px',
-            },
-        },
-        contactBtn: {
-            backgroundColor: theme.primary,
-            color: theme.secondary,
-            borderRadius: '30px',
-            textTransform: 'inherit',
-            textDecoration: 'none',
-            width: '150px',
-            height: '50px',
-            fontSize: '1rem',
-            fontWeight: '500',
-            fontFamily: 'var(--primaryFont)',
-            border: `3px solid ${theme.primary}`,
-            transition: '100ms ease-out',
-            '&:hover': {
-                backgroundColor: theme.secondary,
-                color: theme.tertiary,
-                border: `3px solid ${theme.tertiary}`,
-            },
-            [t.breakpoints.down('sm')]: {
-                display: 'none',
-            },
-        },
-    }));
+    useEffect(() => {
+        const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const mobileQuery = window.matchMedia('(max-width: 900px)');
+        const updateLampScene = () => setCanUseLampScene(!reduceMotionQuery.matches && !mobileQuery.matches);
 
-    const classes = useStyles();
+        updateLampScene();
+        reduceMotionQuery.addEventListener('change', updateLampScene);
+        mobileQuery.addEventListener('change', updateLampScene);
+
+        return () => {
+            reduceMotionQuery.removeEventListener('change', updateLampScene);
+            mobileQuery.removeEventListener('change', updateLampScene);
+        };
+    }, []);
+
+    const socialLinks = [
+        { label: 'GitHub', href: socialsData.github },
+        { label: 'LinkedIn', href: socialsData.linkedIn },
+        { label: 'Twitter', href: socialsData.twitter },
+    ].filter((item) => item.href);
 
     return (
-        <div className='landing'>
-            <div className='landing--container'>
-                <div
-                    className='landing--container-left'
-                    style={{ backgroundColor: theme.primary }}
-                >
-                    <div className='lcl--content'>
-                        {socialsData.linkedIn && (
-                            <a
-                                href={socialsData.linkedIn}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                <FaLinkedin
-                                    className='landing--social'
-                                    style={{ color: theme.secondary }}
-                                    aria-label='LinkedIn'
-                                />
-                            </a>
-                        )}
-                        {socialsData.github && (
-                            <a
-                                href={socialsData.github}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                <FaGithub
-                                    className='landing--social'
-                                    style={{ color: theme.secondary }}
-                                    aria-label='GitHub'
-                                />
-                            </a>
-                        )}
-                        {socialsData.twitter && (
-                            <a
-                                href={socialsData.twitter}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                <FaTwitter
-                                    className='landing--social'
-                                    style={{ color: theme.secondary }}
-                                    aria-label='Twitter'
-                                />
-                            </a>
-                        )}
-                        {socialsData.youtube && (
-                            <a
-                                href={socialsData.youtube}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                <FaYoutube
-                                    className='landing--social'
-                                    style={{ color: theme.secondary }}
-                                    aria-label='YouTube'
-                                />
-                            </a>
-                        )}
-                        {socialsData.blogger && (
-                            <a
-                                href={socialsData.blogger}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                <FaBlogger
-                                    className='landing--social'
-                                    style={{ color: theme.secondary }}
-                                    aria-label='Blogger'
-                                />
-                            </a>
-                        )}
-                    </div>
-                </div>
-                <img
-                    src={headerData.image}
-                    alt=''
-                    className='landing--img'
-                    style={{
-                        opacity: `${drawerOpen ? '0' : '1'}`,
-                        borderColor: theme.secondary,
-                    }}
-                />
-                <div
-                    className='landing--container-right'
-                    style={{ backgroundColor: theme.secondary }}
-                >
-                    <div
-                        className='lcr--content'
-                        style={{ color: theme.tertiary }}
-                    >
-                        <h6>{headerData.title}</h6>
-                        <h1>{headerData.name}</h1>
-                        <p>{headerData.desciption}</p>
+        <section className='landing signal-hero' id='home' aria-labelledby='hero-title'>
+            <div className='signal-hero__backdrop' aria-hidden='true' />
+            <div className='signal-hero__lamp-fallback' aria-hidden='true'>
+                <span className='signal-hero__cable' />
+                <span className='signal-hero__shade' />
+                <span className='signal-hero__beam' />
+            </div>
+            {canUseLampScene && (
+                <Suspense fallback={<div className='signal-hero__loader'><LoadingFallback label='Warming lamp' /></div>}>
+                    <LampScene />
+                </Suspense>
+            )}
 
-                        <div className='lcr-buttonContainer'>
-                            {headerData.resumePdf && (
-                                <a
-                                    href={headerData.resumePdf}
-                                    download='resume'
-                                    target='_blank'
-                                    rel='noreferrer'
-                                >
-                                    <button type="button" className={classes.resumeBtn}>
-                                        Download CV
-                                    </button>
-                                </a>
-                            )}
-                            <NavLink
-                                to='/#contacts'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <button type="button" className={classes.contactBtn}>
-                                    Contact
-                                </button>
-                            </NavLink>
+            <div className='signal-hero__content'>
+                <p className='signal-hero__eyebrow'>{headerData.heroEyebrow}</p>
+                <div className='signal-hero__grid'>
+                    <div className='signal-hero__name' aria-hidden='true'>
+                        <span>TALHA</span>
+                        <span>KHAN</span>
+                    </div>
+                    <div className='signal-hero__copy'>
+                        <ul className='signal-hero__roles' aria-label='Professional focus areas'>
+                            {headerData.heroRoles.map((role) => (
+                                <li key={role}>{role}</li>
+                            ))}
+                        </ul>
+                        <h1 id='hero-title'>{headerData.heroStatement}</h1>
+                        <p>{headerData.desciption}</p>
+                        <div className='signal-hero__actions' aria-label='Primary actions'>
+                            <PrimaryButton as={NavLink} to='/#projects' smooth>
+                                View selected work <span aria-hidden='true'>→</span>
+                            </PrimaryButton>
+                            <SecondaryButton as={NavLink} to='/#contacts' smooth>
+                                Start a conversation
+                            </SecondaryButton>
                         </div>
                     </div>
                 </div>
+                <div className='signal-hero__meta'>
+                    <span>{headerData.title}</span>
+                    {socialLinks.length > 0 && (
+                        <nav aria-label='Social links'>
+                            {socialLinks.map((link) => (
+                                <a key={link.label} href={link.href} target='_blank' rel='noreferrer'>
+                                    {link.label}
+                                </a>
+                            ))}
+                        </nav>
+                    )}
+                </div>
             </div>
-        </div>
+            <a className='signal-hero__scroll' href='#about'>
+                <span aria-hidden='true' />
+                Scroll to signal
+            </a>
+        </section>
     );
 }
 

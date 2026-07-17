@@ -3,8 +3,15 @@ import profileImg from '../assets/images/talha.png';
 
 export const headerData = {
     name: 'Talha Khan',
-    title: "PHP | Laravel | WordPress Developer",
-    desciption: "I’m a passionate developer with hands-on experience in Laravel and WordPress. I enjoy building clean, scalable, and user-friendly web applications that make a real impact.",
+    title: "Backend Engineer · Full-stack Builder · AI-native Developer",
+    heroEyebrow: "INITIATE_SIGNAL / PORTFOLIO_V2",
+    heroRoles: [
+        'Backend Engineer',
+        'Full-stack Builder',
+        'AI-native Developer',
+    ],
+    heroStatement: "Backend thinking. Frontend impact.",
+    desciption: "I build reliable web systems, automation pipelines and digital products that solve real business problems.",
     image: profileImg,
     resumePdf: resume
 }
