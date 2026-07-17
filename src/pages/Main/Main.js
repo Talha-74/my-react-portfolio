@@ -1,28 +1,23 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Navbar, Footer, Landing, About, Skills, Testimonials, Blog, Education, Experience, Contacts, Projects, Services, Achievement } from '../../components'
+import { Navbar, Footer, Landing, About } from '../../components'
+import SelectedWork from '../../components/SelectedWork/SelectedWork'
+import PortfolioSections from '../../components/PortfolioSections/PortfolioSections'
 import { headerData } from '../../data/headerData'
 
 function Main() {
     return (
         <div>
             <Helmet>
-                <title>{headerData.name} - Porfolio</title>
+                <title>{headerData.name} - Portfolio</title>
             </Helmet>
 
-            <Navbar />        
+            <Navbar />
             <Landing />
             <About />
-            <Education />
-            <Skills />
-            <Experience />
-            <Projects />
-            <Achievement />
-            <Services />
-            <Testimonials />
-            <Blog />
-            <Contacts />
+            <SelectedWork />
+            <PortfolioSections />
             <Footer />
         </div>
     )

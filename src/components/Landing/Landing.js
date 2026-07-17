@@ -66,7 +66,7 @@ function Landing() {
                             <PrimaryButton as={NavLink} to='/#projects' smooth>
                                 View selected work <span aria-hidden='true'>→</span>
                             </PrimaryButton>
-                            <SecondaryButton as={NavLink} to='/#contacts' smooth>
+                            <SecondaryButton as={NavLink} to='/#contact' smooth>
                                 Start a conversation
                             </SecondaryButton>
                         </div>
