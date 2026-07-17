@@ -35,7 +35,11 @@
   z-index: var(--z-webgl);
 }
 
-.signal-hero__lamp-fallback { opacity: 0.72; }
+.signal-hero__lamp-fallback {
+  animation: fallback-lamp-drift 7s var(--ease-standard) infinite alternate;
+  opacity: 0.72;
+  transform-origin: 50% 28vh;
+}
 
 .signal-hero__cable {
   background: linear-gradient(#5c4b37, #1c1712);
@@ -210,6 +214,11 @@
   100% { opacity: 0; transform: translateY(1.55rem); }
 }
 
+@keyframes fallback-lamp-drift {
+  0% { transform: rotate(-1.4deg) translateX(-0.35rem); }
+  100% { transform: rotate(1.1deg) translateX(0.35rem); }
+}
+
 @media (max-width: 900px) {
   .signal-hero__grid { grid-template-columns: 1fr; }
   .signal-hero__copy { border-left: 0; padding-left: 0; }
@@ -227,5 +236,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lamp-scene { display: none; }
+  .signal-hero__lamp-fallback,
   .signal-hero__scroll span::after { animation: none; }
 }
